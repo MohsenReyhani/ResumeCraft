@@ -1,0 +1,9 @@
+ <svg class="icon icon-xs me-2" fill="#ECF0F1" viewBox="-5 0 25 25"
+  xmlns="http://www.w3.org/2000/svg">
+  <path fill-rule="evenodd" clip-rule="evenodd"
+    d="M12.5 7.333C12.5 8.62148 11.4555 9.666 10.167 9.666C8.8785 9.666 7.83398 8.62148 7.83398 7.333C7.83398 6.04452 8.8785 5 10.167 5C11.4555 5 12.5 6.04452 12.5 7.333Z"
+    stroke="#ECF0F1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  <path fill-rule="evenodd" clip-rule="evenodd"
+    d="M14.833 15.733C14.833 17.533 12.744 19 10.166 19C7.588 19 5.5 17.537 5.5 15.733C5.5 13.929 7.589 12.467 10.167 12.467C12.745 12.467 14.833 13.929 14.833 15.733Z"
+    stroke="#ECF0F1" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+  </svg>

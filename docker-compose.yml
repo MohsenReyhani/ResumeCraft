@@ -1,0 +1,74 @@
+version: "3.9"
+
+services:
+  django:
+    build:
+      context: .
+      dockerfile: Dockerfile-python
+    container_name: resumedjango
+    command: python manage.py runserver 0.0.0.0:8000
+    volumes:
+      - .:/usr/src/app/
+      - ./data:/data
+    ports:
+      - "8000:8000"
+    environment:
+      - DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1
+      - CELERY_BROKER_URL=redis://:6x9HiF2TGgNj7bYATaR@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:6x9HiF2TGgNj7bYATaR@redis:6379/0
+      - DATABASE_URL=postgres://postgres:postgres@pgdb:5432/postgres # Simplified DB configuration
+      - DJANGO_SECRET_KEY=django-insecure-&r5u!8jv@h&u3v4+a_^g*=^+l=k&zd2wl(3^6r7p7pvntm9l!f
+      - DJANGO_DEBUG=True # Set to False in production
+      - DJANGO_SECURE_SSL_REDIRECT=False
+      - DJANGO_SECURE_HSTS_SECONDS=0
+      - DJANGO_SECURE_HSTS_INCLUDE_SUBDOMAINS=False
+      - DJANGO_SECURE_HSTS_PRELOAD=False
+      - DJANGO_SESSION_COOKIE_SECURE=False
+      - DJANGO_CSRF_COOKIE_SECURE=False
+      - ZARINPAL_MERCHANT=a4fa7435-ece5-4bb1-8d31-d54f31aba8cd
+      - ZARINPAL_SANDBOX=True
+    depends_on:
+      - pgdb
+      - redis
+
+  celery:
+    build:
+      context: .
+      dockerfile: Dockerfile-python
+    container_name: resumecelery
+    command: celery -A ResumeCraft worker -l DEBUG
+    volumes:
+      - .:/usr/src/app
+    environment:
+      - DEBUG=1
+      - DJANGO_ALLOWED_HOSTS=127.0.0.1
+      - CELERY_BROKER_URL=redis://:6x9HiF2TGgNj7bYATaR@redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://:6x9HiF2TGgNj7bYATaR@redis:6379/0
+      - DJANGO_SETTINGS_MODULE=ResumeCraft.settings
+      - DATABASE_URL=postgres://postgres:postgres@pgdb:5432/postgres # Matching DB config for Celery
+      - DJANGO_SECRET_KEY=django-insecure-&r5u!8jv@h&u3v4+a_^g*=^+l=k&zd2wl(3^6r7p7pvntm9l!f # Same secret key
+    depends_on:
+      - django
+      - redis
+
+  pgdb:
+    image: postgres
+    container_name: resumepgdb
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - pgdata:/var/lib/postgresql/data/
+
+  redis:
+    image: redis:latest
+    command: redis-server /usr/local/etc/redis/redis.conf
+    container_name: resumeredis
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./configs/redis/redis.conf:/usr/local/etc/redis/redis.conf
+
+volumes:
+  pgdata:

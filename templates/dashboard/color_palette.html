@@ -1,0 +1,35 @@
+{% load static %}
+{% block content %}
+  <!-- list plans -->
+  <div class="container my-5" style="display: flex;flex-direction: column; align-items: center; justify-content: center; margin: 50px">
+      <div class="row" style="display: flex; align-items: center; justify-content: center; margin: 100px">
+          <!-- Pricing Plans Loop -->
+          {% for item in items %}
+            <div class="icon-shape icon-shape-secondary rounded me-4 me-sm-0 col-md-4 mb-4" style="display: inline-block; margin: 20px">
+                <div class="card shadow h-100">
+                    <div class="card-body" style="background: {{ item.color }}; display: flex; align-items: center; justify-content: center; margin: 10px">
+                        <span class="card-title" style="width: 100px; height: 100px;display: flex;flex-direction: column; align-items: center; justify-content: center; margin: 10px; font-family: sans-serif; font-style: normal; font-weight: 400; font-size: 1rem;">
+                          {% if item.name == 'black' %}
+                            <span style="display: block; color:white">{{ item.name }}</span>
+                            <span style="display: block; color:white">{{ item.color }}</span>
+                            <span style="display: block; color:white">{{ item.r }} {{ item.g }} {{ item.b }}</span>
+                          {% else %}
+                            <span style="display: block">{{ item.name }}</span>
+                            <span style="display: block">{{ item.color }}</span>
+                            <span style="display: block">{{ item.r }} {{ item.g }} {{ item.b }}</span>
+                          {% endif %}
+                          <br>
+                        </h5>
+                    </div>
+                </div>
+            </div>
+          {% endfor %}
+      </div>
+      <div class="row" style="display: flex; align-items: center; justify-content: center; margin: 10px">
+        <a href="https://www.colorcombos.com/color-schemes/649/ColorCombo649.html">https://www.colorcombos.com/color-schemes/649/ColorCombo649.html</a>
+      </div>
+      <div class="row" style="display: flex; align-items: center; justify-content: center;">
+        <a href="https://materialui.co/flatuicolors">https://materialui.co/flatuicolors</a>
+      </div>
+  </div>
+{% endblock content %}

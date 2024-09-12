@@ -1,0 +1,20 @@
+<!-- new items left top menu icons -->
+{% load static %}
+{% if is_edit %}
+<div class="btn btn-link btn-menu text-dark m-0 p-0" 
+    data-bs-toggle="tooltip" data-bs-placement="bottom" title="حذف">
+    <a id="remove_btn">
+    <img src="{% static 'assets/svg/remove.svg' %}" alt="remove item">
+    </a>
+</div>
+{% endif %}
+<div class="btn btn-link btn-menu text-dark m-0 p-0" 
+    data-bs-toggle="tooltip" data-bs-placement="bottom" title="منصرف">
+    {% if unload_on_click %}
+        <a id="{{ cancel_btn }}">
+    {% else %}
+        <a onclick="history.back()" id="{{ cancel_btn }}">
+    {% endif %}
+    <img src="{% static 'assets/svg/back.svg' %}" alt="cancel">
+    </a>
+</div>

@@ -1,0 +1,169 @@
+<script>
+  $(document).ready(function () {
+
+    $("input[name=phone_number]").focus();
+
+    $("#sendSmsButton").click(function (event) {
+      event.preventDefault();
+      sendCode()
+    });
+
+    $("#sendCodeAgain").click(function (event) {
+      event.preventDefault();
+      sendCode()
+      $("#sendCodeAgain").addClass("invisible")
+    });
+
+    $("#phoneLoginButton").click(function (event) {
+      event.preventDefault();
+      var phoneNumber = $("[name=phone_number]").val();
+      var smsCode = $("[name=sms_code]").val();
+      vertifyCode(phoneNumber, smsCode)
+      // You should implement the logic to verify the SMS code here
+      // Check if the entered SMS code matches the one sent to the user
+      // If it's verified, proceed with login; otherwise, show an error message
+      // You may also want to add a loading spinner during verification
+      // For this example, we'll just assume the code is verified
+    });
+
+    function reloadCountDown(cold_down_time) {
+      console.log("reload count down")
+      document.querySelector('[name="timer"]').setAttribute("data-colddown", cold_down_time)
+      $("#sendCodeAgain").addClass("invisible")
+      $("[name=timer]").show()
+      $("[name=timer-description]").show()
+      timer = document.querySelector('[name="timer"]');
+      endTime = cold_down_time
+      startCountdown(timer, endTime, function (timer) {
+        console.log("time ends", timer, endTime)
+        $("#sendCodeAgain").removeClass("invisible")
+        $("[name=timer]").hide()
+        $("[name=timer-description]").hide()
+      })
+    }
+
+    async function sendCode() {
+
+      var phoneNumber = $("[name=phone_number]").val();
+
+      if (phoneNumber == '') {
+        showMessages(['شماره تلفن حداقل باید 11 رقم داشته باشد'])
+        return
+      }
+
+      try {
+
+        await $.ajax({
+          url: "{% url 'send_code' %}",
+          method: 'POST',
+          data: {
+            'phone_number': phoneNumber,
+            csrfmiddlewaretoken: '{{ csrf_token }}'  // Include the CSRF token for security
+          },
+          dataType: 'json',
+          success: function (response) {
+            if (response.hasOwnProperty('messages')) {
+              if (response.success) {
+                $("#loginCodeSection").show();
+                $("#phoneNumberSection").hide();
+                $("#smsCode").focus();
+                $("#smsCode").on('keyup', function(event) {
+                  if (event.key === 'Enter') {
+                    $("#phoneLoginButton").click();
+                  }
+                });
+
+                reloadCountDown(response.cold_down_time)
+              }
+              showMessages(response.messages)
+            } else {
+              showMessages(['خطا داخلی سرور'])
+            }
+
+          },
+          error: function (errors) {
+            if (errors.hasOwnProperty('messages')) {
+              showMessages(errors.messages)
+            } else {
+              console.log(errors.responseText)
+            }
+          }
+        });
+
+      } catch (error) {
+        console.log("error:", error)
+        if (error.status == 403) {
+          showMessages(['بیش از حد تلاش برای ورود انجام شده است لطفا چند دقیقه صبر کنید'])
+        }
+      } 
+
+    }
+
+    async function vertifyCode(phoneNumber, login_code) {
+
+      swalShowLoading("در حال تایید کد ورود", false)
+
+      var urlParams = new URLSearchParams(window.location.search);
+      // Get the value of the 'next' parameter
+      var next = urlParams.get('next');
+
+      await $.ajax({
+        url: "{% url 'verify_sms_code' %}",
+        method: 'POST',
+        data: {
+          'phone_number': phoneNumber,
+          'login_code': login_code,
+          csrfmiddlewaretoken: '{{ csrf_token }}'  // Include the CSRF token for security
+        },
+        dataType: 'json',
+        success: function (response) {
+          //redirect to dashboard
+          if (response.hasOwnProperty('messages')) {
+              if (response.hasOwnProperty('loginSucess') && response.loginSucess) {
+                if (next != undefined) {
+                  console.log(window.location.origin + next)
+                  window.location.href = window.location.origin + next
+                } else {
+                  window.location.href = window.location.origin + "/app"
+                }
+            } else {
+              swalLoadingDone()
+              reloadCountDown(response.cold_down_time)
+              showMessages(response.messages)
+            }
+          } else {
+            swalLoadingDone()
+            showMessages(['خطا داخلی سرور'])
+          }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+          // Check if the error is a 403 Forbidden error
+          if (jqXHR.status === 403) {
+            // Handle 403 specific logic here
+            swalLoadingDone()
+            console.log("Error 403: Access Forbidden.");
+            showMessages(['دسترسی بیش از حد، لطفا بعد از چند دقیقه دوباره امتحان کنید']); // You can customize this message
+          } else {
+            // Handle other errors
+            swalLoadingDone();
+            if (jqXHR.responseJSON && jqXHR.responseJSON.hasOwnProperty('messages')) {
+              swalLoadingDone()
+              showMessages(jqXHR.responseJSON.messages);
+            } else {
+              console.log(jqXHR.responseText);
+            }
+          }
+        }
+      });
+    }
+
+    function showMessages(messages) {
+      txtMessage = messages.join("\n * ")
+      document.querySelectorAll('[name="login-messages"]').forEach(function (element) {
+        element.textContent = txtMessage
+      })
+    }
+
+  })
+
+</script>
