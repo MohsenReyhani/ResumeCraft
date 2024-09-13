@@ -1,0 +1,17 @@
+<!-- edit / remove menu -->
+{% load static %}
+<div class="btn-group">
+    
+    <button class="btn btn-link text-dark m-0 p-0" 
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="ویرایش">
+        <a href="{{ item.get_absolute_url }}" name="edit-item">
+            <img src="{% static 'assets/svg/edit.svg' %}" alt="edit item">
+        </a>
+    </button>
+    <button class="btn btn-link text-dark m-0 p-0" 
+        data-bs-toggle="tooltip" data-bs-placement="bottom" title="حذف">
+        <a data-id="{{ item.id }}" name="menu_remove_item">
+            <img src="{% static 'assets/svg/remove.svg' %}" alt="edit item">
+        </a>
+    </button>
+</div>

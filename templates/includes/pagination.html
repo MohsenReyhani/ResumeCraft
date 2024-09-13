@@ -1,0 +1,40 @@
+<!-- Pagination navigation -->
+{% if page.paginator.num_pages > 1 %}
+<div class="card-footer px-3 border-0 d-flex flex-column flex-lg-row align-items-center justify-content-between">
+    <nav aria-label="Page navigation example">
+        <ul class="pagination mb-0">
+            <!-- First and Previous -->
+            {% if page.has_previous %}
+            <li class="page-item">
+                <a id="first-page-button" class="page-link" href="">اول</a>
+            </li>
+            <li class="page-item">
+                <a id="previous-page-button" class="page-link" href="">قبل</a>
+            </li>
+            {% endif %}
+
+            <!-- Page numbers -->
+            {% with start=page.number|add:"-5" end=page.number|add:"5" %}
+            {% for i in page.paginator.page_range %}
+            {% if i >= start and i <= end %}
+            <li class="page-item {% if i == page.number %}active{% endif %}">
+                <a name="index-page-button" class="page-link">{{ i }}</a>
+            </li>
+            {% endif %}
+            {% endfor %}
+            {% endwith %}
+
+            <!-- Next and Last -->
+            {% if page.has_next %}
+            <li class="page-item">
+                <a id="next-page-button" class="page-link" href="">بعد</a>
+            </li>
+            <li class="page-item">
+                <a id="last-page-button" class="page-link" href="">آخر</a>
+            </li>
+            {% endif %}
+        </ul>
+    </nav>
+    <div class="fw-normal small mt-4 mt-lg-0">نمایش صفحه <b>{{ page.number }}</b> از <b>{{ page.paginator.num_pages }}</b></div>
+</div>
+{% endif %}

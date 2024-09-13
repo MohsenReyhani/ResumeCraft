@@ -1,0 +1,40 @@
+{% load list_helper %}
+
+{% for item in page.object_list %}
+<!-- Display the resume item -->
+<tr>
+    <td class="first-table-item">
+        {% include 'includes/icons/icons_menu_rowlist.html' %}
+    </td>
+    <td>
+        <span class="fw-bold">{{ item.full_name|word_wrap }}</span>
+    </td>
+    <td>
+        <span class="fw-normal">{{ item.title }}</span>
+    </td>
+    <td>
+        <span class="fw-normal">{{ item.contact_phone }}</span>
+    </td>
+    <td>
+        <span class="fw-normal">{{ item.contact_email }}</span>
+    </td>
+    <td>
+        <span class="fw-normal">
+            {% if item.linkedin_url %}
+            <a href="{{ item.linkedin_url }}" target="_blank">LinkedIn</a>
+            {% else %}
+            ---
+            {% endif %}
+        </span>
+    </td>
+    <td class="last-table-item">
+        <span class="fw-bold">{{ item.created_at|date:"Y-m-d" }}</span>
+    </td>
+</tr>
+{% empty %}
+<tr>
+    <td class="text-gray-400 text-center" colspan="7">
+        در حال حاضر رزومه‌ای موجود نیست.
+    </td>
+</tr>
+{% endfor %}

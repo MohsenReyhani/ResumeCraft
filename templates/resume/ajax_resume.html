@@ -1,0 +1,9 @@
+<script>
+    const item_id = "{{ resume_id }}"
+    const load_page_url = "{% url 'resume' %}";
+    const remove_rul = "{% url 'remove_resume' %}";
+
+    $('#new-resume-close').on('click', function (event) {
+        history.back();
+    });
+</script>

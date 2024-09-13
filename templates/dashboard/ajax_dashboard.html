@@ -1,0 +1,109 @@
+<script>
+
+	showFillNamePopUp();
+
+	function getSignUpDialog() {
+		return `
+		<div class="col-12 col-xl-12 overflow-hidden">
+			<span>لطفا اطلاعات زیر را برای تکمیل ثبت نام خود پر نمایید </span>
+			<div class="row mt-3 px-3">
+				<div class="col-md-3 px-0">
+					<lable>نام</lable>
+				</div>
+				<div class="col-md-7 px-0">
+					<input id="firstname" type="text" class="form-control" placeholder="نام خود را وارد نمایید">
+				</div>
+			</div>
+			<div class="row mt-3 px-3">
+				<div class="col-md-3 px-0">
+					<lable>نام خانوادگی</lable>
+				</div>
+				<div class="col-md-7 px-0">
+					<input id="lastname" type="text" class="form-control" placeholder="نام خانوادگی خود را وارد نمایید">
+				</div>
+			</div>
+			<div class="input-group mt-3 px-3 text-muted" id="signup-messages"></div>
+			<div class="row mt-3 px-4">
+				<button id="endsignup" class="btn btn-gray-800 d-block mt-2">تکمیل ثبت نام</button>
+			</div>
+		</div>
+		`
+	}
+
+	function showFillNamePopUp() {
+		if ("{{ showFillNamePopUp }}" == "True") {
+			Swal.fire({
+				title: "<strong>" + "تکمیل ثبت نام" + "</strong>",
+				icon: "info",
+				html: getSignUpDialog(),
+				focusConfirm: false,
+				showConfirmButton: false,
+				allowOutsideClick: false,
+				didOpen: () => { // This is called after the SweetAlert2 dialog has been opened
+					// Bind event listeners here
+					$('#endsignup').on('click', function () {
+						let url = "{% url 'fill_names' %}"
+
+						let firstname = $('#firstname').val()
+						let lastname = $('#lastname').val()
+
+						if (firstname.trim() == "" || lastname.trim() == "") {
+							$('#signup-messages').text("نام و نام خانوادگی نمی تواند خالی باشد")
+							return
+						}
+
+						$.ajax({
+							url: url,
+							method: 'POST',
+							data: {
+								first_name: firstname,
+								last_name: lastname,
+								csrfmiddlewaretoken: '{{ csrf_token }}'  // Include the CSRF token for security
+							},
+							dataType: 'json',
+							success: function (response) {
+								if (response.success) {
+									swalLoadingDone()
+									showIntro()
+								} else if (response.error) {
+									showAlert('error', 'خطا', response.error);
+								}
+							},
+							error: function () {
+								// AJAX request failed, handle the error or show an error message
+								showAlert('error', 'خطا', 'خطا نامشخصی رخ داد لطفا بعد از بازنشانی صفحه دوباره امتحان کنید');
+							}
+						});
+
+					});
+				}
+			});
+		}
+	}
+
+	function showIntro() {
+		introJs().setOptions({
+			steps: [{
+				intro: "سلام! به ایزی فاکتور خوش آمدید! ایزی فاکتور به شما کمک میکنه که فاکتورهاتون رو به رزومه ها ارسال کنید. تو چند قدم آینده بهتون نشون می دیم که چطور می تونید از این نرم افزار استفاده کنید."
+			}, {
+				element: document.querySelector('#sidebarMenu'),
+				intro: "منو اصلی در این قسمت می باشد، با انتخاب گزینه های متفاوت در برنامه جابجا می شوید."
+			}, {
+				element: document.querySelector('.intro-resume'),
+				intro: "دومین قدم ثبت مشتری (شرکت یا شخص) می باشد (درصورت موجود)."
+			}, {
+				intro: "تمام مراحل زیر را در قسمت آموزش می توانید دوباره مشاهده نمایید. همچنان ویدیوهای آموزشی موارد ذکر شده را می تونید در قسمت آموزش ها پیدا کنید."
+			}],
+			tooltipClass: "intro-section",
+			buttonClass: 'btn btn-sm btn-gray-800',
+			nextLabel: 'بعد',
+			prevLabel: 'قبل',
+			doneLabel: 'اتمام',
+			showProgress: true,
+			showBullets: false,
+			exitOnOverlayClick: false,
+			scrollToElement: true
+		}).start();
+	}
+
+</script>

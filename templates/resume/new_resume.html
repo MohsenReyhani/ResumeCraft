@@ -1,0 +1,157 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form id="create-resume-form" method="post" class="mt-4 form-pb" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-12 col-xl-12">
+      <div class="card card-body border-0 shadow mb-4">
+        <div class="row">
+          <div class="col-md-10 mb-3">
+            {% if is_edit %}
+            <h2 class="h5 mb-4">ویرایش رزومه</h2>
+            {% else %}
+            <h2 class="h5 mb-4">ثبت رزومه جدید</h2>
+            {% endif %}
+          </div>
+          <div class="icon-holder col-md-2 mb-3">
+            {% include 'includes/icons/icons_menu_newitems.html' with cancel_btn="new-resume-close" unload_on_click=True %}
+          </div>
+        </div>
+
+        <!-- Resume Personal Information -->
+        <div class="row">
+          <div class="d-flex">
+            <span class="row-seperate-txt">اطلاعات شخصی</span>
+            <hr class="row-seperator" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_full_name">{{ form.full_name.label }}</label>
+              {{ form.full_name }}
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_title">{{ form.title.label }}</label>
+              {{ form.title }}
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_birth_date">{{ form.birth_date.label }}</label>
+              {{ form.birth_date }}
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_contact_email">{{ form.contact_email.label }}</label>
+              {{ form.contact_email }}
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_contact_phone">{{ form.contact_phone.label }}</label>
+              {{ form.contact_phone }}
+            </div>
+          </div>
+          <div class="col-md-4 mb-3">
+            <div>
+              <label for="id_linkedin_url">{{ form.linkedin_url.label }}</label>
+              {{ form.linkedin_url }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="row">
+          <div class="d-flex">
+            <span class="row-seperate-txt">خلاصه حرفه ای</span>
+            <hr class="row-seperator" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12 mb-3">
+            <div>
+              <label for="id_summary">{{ form.summary.label }}</label>
+              {{ form.summary }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Work Experience -->
+        <div class="row">
+          <div class="d-flex">
+            <span class="row-seperate-txt">تجربه کاری</span>
+            <hr class="row-seperator" />
+          </div>
+        </div>
+        <div class="row">
+          {{ work_experience_formset.management_form }}
+          {% for form in work_experience_formset %}
+          <div class="col-md-12 mb-3">
+            <div>
+              <label for="id_job_title">{{ form.job_title.label }}</label>
+              {{ form.job_title }}
+            </div>
+            <div>
+              <label for="id_company_name">{{ form.company_name.label }}</label>
+              {{ form.company_name }}
+            </div>
+            <div>
+              <label for="id_description">{{ form.description.label }}</label>
+              {{ form.description }}
+            </div>
+            <div>
+              <label for="id_start_date">{{ form.start_date.label }}</label>
+              {{ form.start_date }}
+            </div>
+            <div>
+              <label for="id_end_date">{{ form.end_date.label }}</label>
+              {{ form.end_date }}
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        <!-- Skill Categories and Sub-skills -->
+        <div class="row">
+          <div class="d-flex">
+            <span class="row-seperate-txt">مهارت‌ها</span>
+            <hr class="row-seperator" />
+          </div>
+        </div>
+        <div class="row">
+          {{ skill_category_formset.management_form }}
+          {% for form in skill_category_formset %}
+          <div class="col-md-12 mb-3">
+            <div>
+              <label for="id_category_name">{{ form.category_name.label }}</label>
+              {{ form.category_name }}
+            </div>
+            <!-- Sub-skills should be handled as part of this form if you have nested formsets -->
+            <div class="subskills-container">
+              <!-- You can add nested subskills here -->
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+
+        {% if is_edit %}
+        <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">بروزرسانی</button>
+        {% else %}
+        <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">ایجاد</button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</form>
+
+{% endblock content %}
