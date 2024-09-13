@@ -1,0 +1,47 @@
+{% extends 'layouts/base_print.html' %}
+{% load static %}
+
+{% block content %}
+<div class="header">
+  <h1>{{ resume.full_name }}</h1>
+  <p>{{ resume.title }}</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">اطلاعات تماس</h2>
+  <p class="details">
+      ایمیل: {{ resume.contact_email }}<br>
+      شماره تماس: {{ resume.contact_phone }}<br>
+      لینکدین: {{ resume.linkedin_url }}
+  </p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">خلاصه حرفه ای</h2>
+  <p class="details">{{ resume.summary }}</p>
+</div>
+
+<div class="section">
+  <h2 class="section-title">تجربه کاری</h2>
+  {% for experience in work_experiences %}
+  <p class="details">
+      <strong>{{ experience.job_title }}</strong> at {{ experience.company_name }}<br>
+      {{ experience.start_date }} - {{ experience.end_date|default:"Present" }}<br>
+      {{ experience.description }}
+  </p>
+  {% endfor %}
+</div>
+
+<div class="section">
+  <h2 class="section-title">مهارت‌ها</h2>
+  {% for skill in skills %}
+  <p class="details">
+      <strong>{{ skill.category_name }}</strong><br>
+      {% for subskill in skill.sub_skills.all %}
+          - {{ subskill.sub_skill_name }}<br>
+      {% endfor %}
+  </p>
+  {% endfor %}
+</div>
+
+{% endblock content %}

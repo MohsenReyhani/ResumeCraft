@@ -4,7 +4,7 @@ from django.contrib.auth import get_user_model
 class Resume(models.Model):
     # Personal Information
     full_name = models.CharField(max_length=200)
-    title = models.CharField(max_length=100)  # E.g., "Founder at ezFactor"
+    title = models.CharField(max_length=100)  # E.g., "Founder at resumecraft"
     birth_date = models.DateField()
     contact_email = models.EmailField()
     contact_phone = models.CharField(max_length=20, blank=True)
@@ -23,7 +23,7 @@ class Resume(models.Model):
 
 class WorkExperience(models.Model):
     resume = models.ForeignKey(Resume, related_name='work_experiences', on_delete=models.CASCADE)
-    job_title = models.CharField(max_length=100)  # E.g., "Founder at ezFactor"
+    job_title = models.CharField(max_length=100)  # E.g., "Founder at resumecraft"
     company_name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)  # E.g., "Tehran, Iran"
     start_date = models.DateField()

@@ -8,6 +8,7 @@ from django.views.generic import ListView
 from .models import Resume, WorkExperience, SkillCategory
 from .forms import ResumeForm, WorkExperienceFormSet, SkillCategoryFormSet
 from dashboard import notification
+from dashboard.views import BaseListView
 from django.db.models.deletion import ProtectedError
 
 # Decorators for caching and login requirement
@@ -66,23 +67,44 @@ class ResumeView(FormView):
             notification.unkown_prosses_form(request, form.errors)
 
         if isSuccess:
-            return JsonResponse({'success': True}) if request.is_ajax() else redirect("resume_page")
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'success': True})
+            else:
+                return redirect("resume")
         else:
-            return JsonResponse({'error': notification.clean_errors(form.errors)}) if request.is_ajax() else redirect("new_resume")
+            if request.headers.get('x-requested-with') == 'XMLHttpRequest':
+                return JsonResponse({'error': notification.clean_errors(form.errors)})
+            else:
+                return redirect("new_resume")
+
+class ResumeListView(BaseListView):
+	model = Resume
+	template_name = 'resume/resume_page.html'
+	segment = 'resume'
+	search_fields = ['title']
 
 
-@method_decorator(decorators, name='dispatch')
-class ResumeListView(ListView):
-    """
-    View for listing resumes. Paginated list view.
-    """
-    model = Resume
-    template_name = 'resume/resume_page.html'
-    context_object_name = 'resumes'
-    paginate_by = 10  # Pagination
+# for print reumse page
+@never_cache
+@login_required(login_url="/app/accounts/login/")
+def print_resume(request, resume_id=None):
 
-    def get_queryset(self):
-        return Resume.objects.filter(created_by=self.request.user).order_by('-created_at')
+    # Get the resume object
+    resume = get_object_or_404(Resume, id=resume_id)
+    
+    # Fetch related work experiences and skills
+    work_experiences = WorkExperience.objects.filter(resume=resume)
+    skills = SkillCategory.objects.filter(resume=resume)
+
+    context = {
+        "resume": resume,
+        "work_experiences": work_experiences,
+        "skills": skills,
+        "segment": "print",
+    }
+
+    return render(request, "resume/resume_print.html", context)
+
 
 
 # Removing a resume via AJAX

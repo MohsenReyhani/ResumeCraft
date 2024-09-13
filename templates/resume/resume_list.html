@@ -1,10 +1,16 @@
 {% load list_helper %}
+{% load static %}
 
 {% for item in page.object_list %}
 <!-- Display the resume item -->
 <tr>
     <td class="first-table-item">
         {% include 'includes/icons/icons_menu_rowlist.html' %}
+        <button class="btn btn-link text-dark m-0 p-0" data-bs-toggle="tooltip" data-bs-placement="bottom" title="مشاهده">
+            <a href="{% url 'print_resume' resume_id=item.id %}">
+                <img src="{% static 'assets/svg/checkandsend.svg' %}" alt="check item status">
+            </a>
+        </button>
     </td>
     <td>
         <span class="fw-bold">{{ item.full_name|word_wrap }}</span>

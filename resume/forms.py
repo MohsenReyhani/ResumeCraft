@@ -140,3 +140,11 @@ class SubSkillForm(forms.ModelForm):
                 'class': 'form-control'  # Add Bootstrap form-control class
             }),
         }
+
+# SubSkill Formset
+SubSkillFormSet = inlineformset_factory(
+    SkillCategory, SubSkill,
+    fields=('sub_skill_name',),
+    extra=1,  # Allows one empty form for adding new sub-skills
+    can_delete=True  # Allow users to delete existing sub-skills
+)

@@ -86,17 +86,21 @@
           </div>
         </div>
 
-        <!-- Work Experience -->
+        <!-- Work Experience Section -->
         <div class="row">
           <div class="d-flex">
             <span class="row-seperate-txt">تجربه کاری</span>
             <hr class="row-seperator" />
           </div>
         </div>
-        <div class="row">
+        <div id="work_experiences-forms" class="row">
           {{ work_experience_formset.management_form }}
           {% for form in work_experience_formset %}
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12 mb-3 form-row" id="work-experience-{{ forloop.counter }}">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="form-number">{{ forloop.counter }}</span>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removeForm('work-experience-{{ forloop.counter }}')">حذف</button>
+            </div>
             <div>
               <label for="id_job_title">{{ form.job_title.label }}</label>
               {{ form.job_title }}
@@ -121,27 +125,37 @@
           {% endfor %}
         </div>
 
-        <!-- Skill Categories and Sub-skills -->
+        <!-- Button to add more Work Experience -->
+        <div class="mb-3">
+          <button type="button" class="btn btn-primary" onclick="addForm('work_experiences', 'form-row')">اضافه کردن تجربه کاری</button>
+        </div>
+
+        <!-- Skill Categories Section -->
         <div class="row">
           <div class="d-flex">
             <span class="row-seperate-txt">مهارت‌ها</span>
             <hr class="row-seperator" />
           </div>
         </div>
-        <div class="row">
+        <div id="skill_categories-forms" class="row">
           {{ skill_category_formset.management_form }}
           {% for form in skill_category_formset %}
-          <div class="col-md-12 mb-3">
+          <div class="col-md-12 mb-3 form-row" id="skill-category-{{ forloop.counter }}">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="form-number">{{ forloop.counter }}</span>
+              <button type="button" class="btn btn-danger btn-sm" onclick="removeForm('skill-category-{{ forloop.counter }}')">حذف</button>
+            </div>
             <div>
               <label for="id_category_name">{{ form.category_name.label }}</label>
               {{ form.category_name }}
             </div>
-            <!-- Sub-skills should be handled as part of this form if you have nested formsets -->
-            <div class="subskills-container">
-              <!-- You can add nested subskills here -->
-            </div>
           </div>
           {% endfor %}
+        </div>
+
+        <!-- Button to add more Skill Categories -->
+        <div class="mb-3">
+          <button type="button" class="btn btn-primary" onclick="addForm('skill_categories', 'form-row')">اضافه کردن دسته‌بندی مهارت‌ها</button>
         </div>
 
         {% if is_edit %}
@@ -149,9 +163,19 @@
         {% else %}
         <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">ایجاد</button>
         {% endif %}
+        <button type="submit" name="btn-show-resume-print" class="btn btn-gray-800 mt-2">مشاهده پیش فاکتور</button>
       </div>
     </div>
   </div>
 </form>
+
+<!-- Hidden templates for cloning -->
+<div id="empty-form-template-work" style="display:none;">
+  {{ work_experience_formset.empty_form|safe }}
+</div>
+
+<div id="empty-form-template-skill" style="display:none;">
+  {{ skill_category_formset.empty_form|safe }}
+</div>
 
 {% endblock content %}
