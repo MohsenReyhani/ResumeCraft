@@ -1,47 +1,68 @@
 {% extends 'layouts/base_print.html' %}
 {% load static %}
 
-{% block content %}
-<div class="header">
-  <h1>{{ resume.full_name }}</h1>
-  <p>{{ resume.title }}</p>
-</div>
 
-<div class="section">
-  <h2 class="section-title">اطلاعات تماس</h2>
-  <p class="details">
-      ایمیل: {{ resume.contact_email }}<br>
-      شماره تماس: {{ resume.contact_phone }}<br>
-      لینکدین: {{ resume.linkedin_url }}
-  </p>
-</div>
 
-<div class="section">
-  <h2 class="section-title">خلاصه حرفه ای</h2>
-  <p class="details">{{ resume.summary }}</p>
-</div>
+{% block content %}<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resume</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="resume-header">
+        <div class="profile-image">
+            <img src="profile-pic.jpg" alt="Profile Picture">
+        </div>
+        <div class="header-text">
+            <h1>Mohsen Reyhani</h1>
+            <h2>BackEnd Developer</h2>
+            <p>Born Feb 10, 1996</p>
+        </div>
+    </header>
 
-<div class="section">
-  <h2 class="section-title">تجربه کاری</h2>
-  {% for experience in work_experiences %}
-  <p class="details">
-      <strong>{{ experience.job_title }}</strong> at {{ experience.company_name }}<br>
-      {{ experience.start_date }} - {{ experience.end_date|default:"Present" }}<br>
-      {{ experience.description }}
-  </p>
-  {% endfor %}
-</div>
+    <!-- Professional Summary -->
+    <section class="summary">
+        <h3>Professional Summary</h3>
+        <p>
+            Experienced Python developer with over 8 years of software engineering expertise, focusing on scalable backend development using Django and Python-based frameworks...
+        </p>
+    </section>
 
-<div class="section">
-  <h2 class="section-title">مهارت‌ها</h2>
-  {% for skill in skills %}
-  <p class="details">
-      <strong>{{ skill.category_name }}</strong><br>
-      {% for subskill in skill.sub_skills.all %}
-          - {{ subskill.sub_skill_name }}<br>
-      {% endfor %}
-  </p>
-  {% endfor %}
-</div>
+    <!-- Work Experience -->
+    <section class="work-experience">
+        <h3>Work Experience</h3>
+        <div class="experience-item">
+            <h4>Founder at ezFactor</h4>
+            <p><em>Tehran, Iran</em> - April 2023 - Current</p>
+            <p>
+                Developed and deployed scalable backend solutions with Django, working over 1500+ hours on core features.
+            </p>
+        </div>
+        <!-- Repeat similar structure for other work experiences -->
+    </section>
+
+    <!-- Skills Section -->
+    <section class="skills">
+        <h3>Software Skills</h3>
+        <div class="skill-item">
+            <span>Python (Backend)</span>
+            <div class="progress-bar">
+                <div class="progress" style="width: 90%;"></div>
+            </div>
+        </div>
+        <div class="skill-item">
+            <span>Django</span>
+            <div class="progress-bar">
+                <div class="progress" style="width: 80%;"></div>
+            </div>
+        </div>
+        <!-- Repeat similar structure for other skills -->
+    </section>
+</body>
+</html>
 
 {% endblock content %}

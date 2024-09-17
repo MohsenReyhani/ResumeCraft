@@ -70,19 +70,23 @@ class ResumeView(FormView):
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'success': True})
             else:
-                return redirect("resume")
+                if 'btn-show-resume-print' in request.POST:
+                    # Redirect to the resume print preview page
+                    return redirect('print_resume', resume_id=resume.id)
+                else:
+                    # Default success redirect
+                    return redirect("resume")
         else:
             if request.headers.get('x-requested-with') == 'XMLHttpRequest':
                 return JsonResponse({'error': notification.clean_errors(form.errors)})
             else:
-                return redirect("new_resume")
+                return redirect("create_resume")
 
 class ResumeListView(BaseListView):
 	model = Resume
 	template_name = 'resume/resume_page.html'
 	segment = 'resume'
 	search_fields = ['title']
-
 
 # for print reumse page
 @never_cache
@@ -94,12 +98,12 @@ def print_resume(request, resume_id=None):
     
     # Fetch related work experiences and skills
     work_experiences = WorkExperience.objects.filter(resume=resume)
-    skills = SkillCategory.objects.filter(resume=resume)
+    skill_categories = SkillCategory.objects.filter(resume=resume)
 
     context = {
         "resume": resume,
         "work_experiences": work_experiences,
-        "skills": skills,
+        "skill_categories": skill_categories,
         "segment": "print",
     }
 

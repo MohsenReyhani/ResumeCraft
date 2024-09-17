@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 class Resume(models.Model):
     # Personal Information
@@ -20,6 +21,10 @@ class Resume(models.Model):
 
     def __str__(self):
         return self.full_name
+    
+    def get_absolute_url(self):
+        return reverse("edit_resume", args=[str(self.id)])
+
 
 class WorkExperience(models.Model):
     resume = models.ForeignKey(Resume, related_name='work_experiences', on_delete=models.CASCADE)
