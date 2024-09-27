@@ -8,7 +8,6 @@
         history.back();
     });
     
-    
     function addForm(formsetPrefix, formClass) {
         var formCountElem = document.getElementById('id_' + formsetPrefix + '-TOTAL_FORMS');
         if (!formCountElem) {
@@ -55,5 +54,46 @@
             formElement.remove();
         }
     }
+
+    function updateForms() {
+        
+        var fileInput = document.getElementById('id_profile_image');
+        var button = document.createElement('button');
+        button.type = 'button';  // Set the button type to 'button' to prevent form submission
+        button.className = fileInput.getAttribute('class');
+        button.textContent = fileInput.getAttribute('data-button-text');
+
+        var filenameSpan = document.createElement('span');
+        filenameSpan.textContent = fileInput.getAttribute('data-placeholder-text');
+        filenameSpan.classList.add("w-100")
+
+        fileInput.style.visibility = 'hidden';
+        fileInput.style.position = 'absolute';
+
+        button.onclick = function() {
+            fileInput.click();
+        };
+
+        fileInput.onchange = function() {
+            filenameSpan.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : fileInput.getAttribute('data-placeholder-text');
+        };
+
+        // Create a container for the button and filenameSpan
+        var container = document.createElement('div');
+        container.style.display = 'flex'; // Set the display to flex
+        container.style.alignItems = 'center'; // Align items vertically in the center
+        container.style.gap = '10px'; // Optional: add space between the button and span
+
+        // Append the button and filenameSpan to the container
+        container.appendChild(button);
+        container.appendChild(filenameSpan);
+
+        // Insert the container before the fileInput in the DOM
+        fileInput.parentNode.insertBefore(container, fileInput);
+    }
+
+    document.addEventListener("DOMContentLoaded", function() {
+        updateForms()
+    })
 
 </script>

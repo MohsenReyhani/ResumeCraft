@@ -1,28 +1,22 @@
 {% extends 'layouts/base_print.html' %}
 {% load static %}
 
+{% block content %}
 
-
-{% block content %}<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Resume</title>
-    <link rel="stylesheet" href="styles.css">
-</head>
-<body>
     <!-- Header Section -->
-    <header class="resume-header">
-        <div class="profile-image">
-            <img src="profile-pic.jpg" alt="Profile Picture">
-        </div>
+    <header class="resume-header d-flex">
         <div class="header-text">
-            <h1>Mohsen Reyhani</h1>
-            <h2>BackEnd Developer</h2>
-            <p>Born Feb 10, 1996</p>
+            <h1>{{ resume.fullname }}</h1>
+        </div>
+        <div class="profile-image">
+            <img src="{{ resume.profile_image }}" alt="Profile Picture">
         </div>
     </header>
+
+    <div>
+        <h2>{{ resume.title }}</h2>
+        <p>born {{ reusme.birth_date }}</p>
+    </diV>
 
     <!-- Professional Summary -->
     <section class="summary">
@@ -62,7 +56,5 @@
         </div>
         <!-- Repeat similar structure for other skills -->
     </section>
-</body>
-</html>
 
 {% endblock content %}

@@ -46,7 +46,11 @@ class ResumeForm(forms.ModelForm):
                 'class': 'form-control'
             }),
             'profile_image': forms.ClearableFileInput(attrs={
-                'class': 'form-control'
+                'class': 'form-control',
+                'id': 'id_profile_image',   # Custom ID for easy JS targeting
+                'class': 'form-control',    # Bootstrap class for styling
+                'data-button-text': 'آپلود عکس',   # Custom data attribute for JS
+                'data-placeholder-text': 'هیچ عکسی انتخاب نشده است.'  # Custom data attribute for JS
             }),
             'summary': forms.Textarea(attrs={
                 'placeholder': 'خلاصه‌ای از حرفه خود را وارد کنید', 
