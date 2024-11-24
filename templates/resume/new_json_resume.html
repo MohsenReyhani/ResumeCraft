@@ -1,0 +1,69 @@
+{% extends 'layouts/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<form id="create-resume-form" method="post" class="mt-4 form-pb" enctype="multipart/form-data">
+  {% csrf_token %}
+  <div class="row">
+    <div class="col-12 col-xl-12">
+      <div class="card card-body border-0 shadow mb-4">
+        <div class="row">
+          <div class="col-md-10 mb-3">
+            {% if is_edit %}
+            <h2 class="h5 mb-4">ویرایش رزومه</h2>
+            {% else %}
+            <h2 class="h5 mb-4">ثبت رزومه جدید</h2>
+            {% endif %}
+          </div>
+          <div class="icon-holder col-md-2 mb-3">
+            {% include 'includes/icons/icons_menu_newitems.html' with cancel_btn="new-resume-close" unload_on_click=True %}
+          </div>
+        </div>
+
+        <!-- Resume Personal Information -->
+        <div class="row">
+          <div class="d-flex">
+            <span class="row-seperate-txt">اطلاعات کلی</span>
+            <hr class="row-seperator" />
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-4 mb-5">
+            <div>
+              <label for="profile_image">{{ form.profile_image.label }}</label>
+              {{ form.profile_image }}
+            </div>
+          </div>
+        </div> 
+        <div class="row">
+          <div class="col-md-4 mb-5">
+            <div>
+              <label for="profile_image">{{ form.data.label }}</label>
+              {{ form.data }}
+            </div>
+          </div>
+        </div>
+
+        {% if is_edit %}
+        <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">بروزرسانی</button>
+        {% else %}
+        <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">ایجاد</button>
+        {% endif %}
+        <button type="submit" name="btn-show-resume-print" class="btn btn-gray-800 mt-2">مشاهده رزومه</button>
+      </div>
+    </div>
+  </div>
+</form>
+
+<!-- Hidden templates for cloning -->
+<div id="empty-form-template-work" style="display:none;">
+  {{ work_experience_formset.empty_form|safe }}
+</div>
+
+<div id="empty-form-template-skill" style="display:none;">
+  {{ skill_category_formset.empty_form|safe }}
+</div>
+
+{% endblock content %}

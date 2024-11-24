@@ -1,9 +1,11 @@
+import json 
+
 from django import forms
 from django.utils.translation import gettext_lazy as _
-from .models import Resume
 from django import forms
 from django.forms import inlineformset_factory
-from .models import Resume, WorkExperience, SkillCategory, SubSkill
+
+from .models import Resume, WorkExperience, SkillCategory, SubSkill, JsonResume
 
 class ResumeForm(forms.ModelForm):
     class Meta:
@@ -131,6 +133,7 @@ SkillCategoryFormSet = inlineformset_factory(
     can_delete=True  # Allow deletion of individual items
 )
 
+
 class SubSkillForm(forms.ModelForm):
     class Meta:
         model = SubSkill
@@ -145,6 +148,7 @@ class SubSkillForm(forms.ModelForm):
             }),
         }
 
+
 # SubSkill Formset
 SubSkillFormSet = inlineformset_factory(
     SkillCategory, SubSkill,
@@ -152,3 +156,26 @@ SubSkillFormSet = inlineformset_factory(
     extra=1,  # Allows one empty form for adding new sub-skills
     can_delete=True  # Allow users to delete existing sub-skills
 )
+
+
+class JsonResumeForm(forms.ModelForm):
+    class Meta:
+        model = JsonResume
+        fields = ['profile_image', 'data']
+        widgets = {
+            'profile_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'data': forms.Textarea(attrs={
+                'class': 'form-control',
+                'placeholder': 'Enter JSON data',
+                'rows': 20
+            }),
+        }
+
+    def clean_data(self):
+        data = self.cleaned_data.get('data')
+        try:
+            # Validate if the input is valid JSON
+            json.loads(data)
+        except (TypeError, json.JSONDecodeError):
+            raise forms.ValidationError("Invalid JSON format. Please provide valid JSON data.")
+        return data
