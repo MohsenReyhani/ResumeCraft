@@ -31341,21 +31341,34 @@ body {
 .resume-header {
   background-color: #3498db;
   color: white;
-  padding: 20px;
+  padding-left: 100px;
+  padding-right: 100px;
   display: flex;
-  align-items: center;
+  justify-content: space-between;
+  align-items: end;
+  height: 250px;
 }
 
-.profile-image img {
-  width: 120px;
-  height: 120px;
+.profile-image-container {
+  padding: 10px;
+  width: 300px;
+  height: 300px;
+}
+
+.profile-image-container div {
   border-radius: 50%;
-  border: 5px solid white;
-  margin-right: 20px;
+  border: 3px solid #3498db;
+  margin-top: 130px;
+}
+
+.profile-image-container div img {
+  border-radius: 50%;
+  border: 3px solid white;
 }
 
 .header-text h1 {
   font-size: 36px;
+  font-weight: 400;
   margin: 0;
 }
 
@@ -31427,4 +31440,71 @@ body {
 .progress {
   height: 100%;
   background-color: #3498db;
+}
+
+.profile-image div {
+  display: none !important;
+}
+
+.profile-image input {
+  display: block !important;
+  visibility: visible !important;
+  width: 250px;
+}
+
+.title-name {
+  color: white;
+}
+
+.second-header {
+  padding-left: 100px;
+  padding-right: 100px;
+}
+
+.second-header h2 {
+  padding-top: 5px;
+  margin-bottom: 0;
+}
+
+.second-header p {
+  margin-left: 4%;
+}
+
+.summary {
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 100px;
+  background: #e7e7e7;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.summary h3 {
+  font-size: 20px;
+  font-weight: 500;
+}
+
+.summary p {
+  font-size: 14px;
+  font-weight: 300;
+  color: #3a3a3a;
+}
+
+.work-experience {
+  width: 45%;
+  margin-left: 100px;
+  background: #e7e7e7;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.skills {
+  width: 40%;
+  margin-right: 100px;
+  background: #e7e7e7;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 25px;
 }

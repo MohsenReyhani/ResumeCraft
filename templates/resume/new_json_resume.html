@@ -32,6 +32,12 @@
         <div class="row">
           <div class="col-md-4 mb-5">
             <div>
+              <label for="website_name">{{ form.website_name.label }}</label>
+              {{ form.website_name }}
+            </div>
+          </div>
+          <div class="col-md-4 mb-5">
+            <div class="profile-image">
               <label for="profile_image">{{ form.profile_image.label }}</label>
               {{ form.profile_image }}
             </div>
@@ -40,7 +46,7 @@
         <div class="row">
           <div class="col-md-4 mb-5">
             <div>
-              <label for="profile_image">{{ form.data.label }}</label>
+              <label for="data">{{ form.data.label }}</label>
               {{ form.data }}
             </div>
           </div>

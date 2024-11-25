@@ -161,9 +161,12 @@ SubSkillFormSet = inlineformset_factory(
 class JsonResumeForm(forms.ModelForm):
     class Meta:
         model = JsonResume
-        fields = ['profile_image', 'data']
+        fields = ['website_name', 'profile_image', 'data']
         widgets = {
-            'profile_image': forms.ClearableFileInput(attrs={'class': 'form-control'}),
+            'website_name': forms.TextInput(attrs={
+                'placeholder': 'نام سایت مورد نظر را وارد کنید',
+                'class': 'form-control'
+            }),
             'data': forms.Textarea(attrs={
                 'class': 'form-control',
                 'placeholder': 'Enter JSON data',
@@ -171,11 +174,26 @@ class JsonResumeForm(forms.ModelForm):
             }),
         }
 
+    # Customizing the profile_image field
+    profile_image = forms.ImageField(
+        widget=forms.ClearableFileInput(
+            attrs={
+                'class': 'form-control',
+                'data-text': 'Upload Image', 
+            }
+        ),
+        label="Profile Image",
+    )
+
     def clean_data(self):
         data = self.cleaned_data.get('data')
-        try:
-            # Validate if the input is valid JSON
-            json.loads(data)
-        except (TypeError, json.JSONDecodeError):
-            raise forms.ValidationError("Invalid JSON format. Please provide valid JSON data.")
+        # If data is a string, validate it as JSON
+        if isinstance(data, str):
+            try:
+                json.loads(data)  # Validate JSON string
+            except json.JSONDecodeError:
+                raise forms.ValidationError("Invalid JSON format. Please provide valid JSON data.")
+        elif not isinstance(data, (dict, list)):  # Ensure data is a valid JSON object or array
+            raise forms.ValidationError("Invalid JSON data. Must be a JSON object or array.")
+
         return data

@@ -182,6 +182,7 @@ def mother_resume():
 
 class JsonResume(models.Model):
     # Personal Information
+    website_name = models.CharField(max_length=200, default='company')
     profile_image = models.ImageField(upload_to='profile_images/', blank=True, null=True)
     data = models.JSONField(default=mother_resume)
     created_by = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)

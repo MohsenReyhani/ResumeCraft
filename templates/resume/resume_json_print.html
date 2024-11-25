@@ -6,55 +6,59 @@
     <!-- Header Section -->
     <header class="resume-header d-flex">
         <div class="header-text">
-            <h1>{{ resume.fullname }}</h1>
+            <h1 class="title-name">{{ data.personal_info.name }}</h1>
         </div>
-        <div class="profile-image">
-            <img src="{{ resume.profile_image }}" alt="Profile Picture">
+        <div class="profile-image-container">
+            <div>
+                <img src="{{ profile_image.url }}" alt="Profile Picture">
+            </div>
         </div>
     </header>
 
-    <div>
-        <h2>{{ resume.title }}</h2>
-        <p>born {{ reusme.birth_date }}</p>
+    <div class="second-header">
+        <h2>{{ data.personal_info.role }}</h2>
+        <p>born {{ data.personal_info.dob }}</p>
     </diV>
 
     <!-- Professional Summary -->
     <section class="summary">
         <h3>Professional Summary</h3>
-        <p>
-            Experienced Python developer with over 8 years of software engineering expertise, focusing on scalable backend development using Django and Python-based frameworks...
-        </p>
+        <p>{{ data.summary }}</p>
     </section>
+    
+    <div class="d-flex justify-content-between">
 
-    <!-- Work Experience -->
-    <section class="work-experience">
-        <h3>Work Experience</h3>
-        <div class="experience-item">
-            <h4>Founder at ezFactor</h4>
-            <p><em>Tehran, Iran</em> - April 2023 - Current</p>
-            <p>
-                Developed and deployed scalable backend solutions with Django, working over 1500+ hours on core features.
-            </p>
+        <!-- Work Experience -->
+        <div class="work-experience">
+            <h3>Work Experience</h3>
+            <div class="experience-item">
+                <h4>Founder at ezFactor</h4>
+                <p><em>Tehran, Iran</em> - April 2023 - Current</p>
+                <p>
+                    Developed and deployed scalable backend solutions with Django, working over 1500+ hours on core features.
+                </p>
+            </div>
+            <!-- Repeat similar structure for other work experiences -->
         </div>
-        <!-- Repeat similar structure for other work experiences -->
-    </section>
 
-    <!-- Skills Section -->
-    <section class="skills">
-        <h3>Software Skills</h3>
-        <div class="skill-item">
-            <span>Python (Backend)</span>
-            <div class="progress-bar">
-                <div class="progress" style="width: 90%;"></div>
+        <!-- Skills Section -->
+        <div class="skills">
+            <h3>Software Skills</h3>
+            <div class="skill-item">
+                <span>Python (Backend)</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 90%;"></div>
+                </div>
             </div>
-        </div>
-        <div class="skill-item">
-            <span>Django</span>
-            <div class="progress-bar">
-                <div class="progress" style="width: 80%;"></div>
+            <div class="skill-item">
+                <span>Django</span>
+                <div class="progress-bar">
+                    <div class="progress" style="width: 80%;"></div>
+                </div>
             </div>
+            <!-- Repeat similar structure for other skills -->
         </div>
-        <!-- Repeat similar structure for other skills -->
-    </section>
+
+    </div>
 
 {% endblock content %}

@@ -142,7 +142,7 @@ class ResumeViewV02(FormView):
 
 
 class ResumeListView(BaseListView):
-    model = Resume
+    model = JsonResume
     template_name = 'resume/resume_page.html'
     segment = 'resume'
     search_fields = ['title']
@@ -157,7 +157,8 @@ def print_resume(request, resume_id=None):
     resume = get_object_or_404(JsonResume, id=resume_id)
     
     context = {
-        "resume": resume,
+        "profile_image": resume.profile_image,
+        "data": resume.data,
         "segment": "print",
     }
 

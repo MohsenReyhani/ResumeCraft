@@ -1,6 +1,9 @@
 from django.urls import path
+from django.conf.urls.static import static
+from django.conf import settings
+
 from .views import ResumeView, ResumeListView, remove_resume, resume_all_list, print_resume, ResumeViewV02
-from django.contrib.auth.decorators import login_required
+
 
 urlpatterns = [
     # Index - List of resumes
@@ -14,4 +17,5 @@ urlpatterns = [
     path('print/<int:resume_id>/', print_resume, name='print_resume'),
     # Remove a resume (AJAX)
     path('remove/', remove_resume, name='remove_resume'),
-]
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
