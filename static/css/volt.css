@@ -30654,7 +30654,7 @@ article .h6 {
   }
 
   @page {
-    size: A4 landscape;
+    size: A4 portrait;
     margin: 1cm;
   }
 
@@ -31337,109 +31337,58 @@ body {
 
 
 
+
+:root {
+  --resume-print-primary: #3498db;
+}
+
+body {
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.print-body {
+  background-color: #ffffff;
+}
+
 /* Header */
 .resume-header {
-  background-color: #3498db;
+  background-color: var(--resume-print-primary);
   color: white;
-  padding-left: 100px;
-  padding-right: 100px;
   display: flex;
   justify-content: space-between;
   align-items: end;
-  height: 250px;
+  height: 120px;
+  padding-right: 50px;
+  padding-left: 50px;
+}
+
+.rs-margin {
+  margin-left: 25px;
+  margin-right: 25px;
+}
+
+.header-text h1 {
+  font-size: 24px;
+  font-weight: 400;
+  margin: 0;
 }
 
 .profile-image-container {
   padding: 10px;
-  width: 300px;
-  height: 300px;
+  width: 175px;
+  height: 175px;
 }
 
 .profile-image-container div {
   border-radius: 50%;
   border: 3px solid #3498db;
-  margin-top: 130px;
+  margin-top: 80px;
 }
 
 .profile-image-container div img {
   border-radius: 50%;
   border: 3px solid white;
-}
-
-.header-text h1 {
-  font-size: 36px;
-  font-weight: 400;
-  margin: 0;
-}
-
-.header-text h2 {
-  font-size: 24px;
-  margin: 5px 0;
-}
-
-.header-text p {
-  font-size: 14px;
-}
-
-/* Professional Summary */
-.summary {
-  padding: 20px;
-  background-color: white;
-  margin: 20px 0;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.summary h3 {
-  font-size: 20px;
-  margin-bottom: 10px;
-}
-
-/* Work Experience */
-.work-experience {
-  padding: 20px;
-  background-color: white;
-  margin: 20px 0;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.experience-item h4 {
-  font-size: 18px;
-  margin-bottom: 5px;
-}
-
-.experience-item p {
-  font-size: 14px;
-  margin: 5px 0;
-}
-
-/* Skills */
-.skills {
-  padding: 20px;
-  background-color: white;
-  margin: 20px 0;
-  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-}
-
-.skill-item {
-  margin-bottom: 15px;
-}
-
-.skill-item span {
-  display: block;
-  font-size: 16px;
-  margin-bottom: 5px;
-}
-
-.progress-bar {
-  background-color: #ddd;
-  border-radius: 5px;
-  overflow: hidden;
-  height: 10px;
-}
-
-.progress {
-  height: 100%;
-  background-color: #3498db;
 }
 
 .profile-image div {
@@ -31457,54 +31406,136 @@ body {
 }
 
 .second-header {
-  padding-left: 100px;
-  padding-right: 100px;
+  margin-left: 50px;
+  margin-right: 10px;
 }
 
 .second-header h2 {
   padding-top: 5px;
   margin-bottom: 0;
+  font-size: 20px;
 }
 
 .second-header p {
-  margin-left: 4%;
+  margin-left: 2px;
+  font-weight: 400;
 }
 
 .summary {
-  margin-left: 100px;
-  margin-right: 100px;
-  margin-top: 100px;
-  background: #e7e7e7;
+  margin-top: 25px;
+  background-color: #fafafa;
   box-shadow: none;
   border-radius: 5px;
-  padding: 25px;
+  padding: 10px 25px;
 }
 
 .summary h3 {
-  font-size: 20px;
+  font-size: 14px;
   font-weight: 500;
 }
 
 .summary p {
-  font-size: 14px;
+  font-size: 12px;
   font-weight: 300;
   color: #3a3a3a;
+  margin-bottom: 0px;
 }
 
 .work-experience {
-  width: 45%;
-  margin-left: 100px;
-  background: #e7e7e7;
+  width: 50%;
+  background-color: #fafafa;
   box-shadow: none;
   border-radius: 5px;
   padding: 25px;
 }
 
 .skills {
-  width: 40%;
-  margin-right: 100px;
-  background: #e7e7e7;
+  width: 49%;
+  background-color: #fafafa;
   box-shadow: none;
   border-radius: 5px;
   padding: 25px;
+}
+
+.work-experience h3,
+.skills h3 {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.experience-item {
+  margin-top: 15px;
+}
+
+.experience-item h4 {
+  font-size: 13px;
+  font-weight: 400;
+  color: #078bc1;
+  margin-bottom: 0;
+}
+
+.experience-item p {
+  margin-bottom: 0;
+  line-height: 15px;
+  font-weight: 300;
+}
+
+.experience-item .location-text {
+  font-size: 12px;
+}
+
+.experience-item .date-text {
+  font-size: 12px;
+}
+
+.experience-item .description-text {
+  font-size: 12px;
+}
+
+.experience-item .role-description-text {
+  font-size: 12px;
+  margin-left: 14px;
+  font-weight: 300;
+}
+
+.experience-item .role-name-text {
+  font-size: 12px;
+}
+
+.experience-item .role-item {
+  margin-top: 10px;
+}
+
+.skill-item {
+  margin-top: 10px;
+}
+
+.skill-item .title-text {
+  font-size: 12px;
+}
+
+.skill-item .progress-bar-container {
+  position: relative;
+  background-color: #e3f1ef;
+  border: 1px solid #2c8fe0;
+  border-radius: 10px;
+}
+
+.skill-item .progress-bar-container .skilllevel {
+  background-color: #2c8fe0;
+  position: relative;
+  border-radius: 50px;
+  height: 2px;
+}
+
+.skill-item .progress-bar-container .bulletpoint {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 0;
+  border-radius: 100%;
+  background-color: #2c8fe0;
+  border: 2px #ffffff solid;
+  margin-left: -5px;
+  top: -4px;
 }

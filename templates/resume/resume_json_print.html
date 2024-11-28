@@ -1,6 +1,8 @@
 {% extends 'layouts/base_print.html' %}
 {% load static %}
 
+{% load print_helper %}
+
 {% block content %}
 
     <!-- Header Section -->
@@ -21,42 +23,50 @@
     </diV>
 
     <!-- Professional Summary -->
-    <section class="summary">
+    <section class="summary rs-margin">
         <h3>Professional Summary</h3>
         <p>{{ data.summary }}</p>
     </section>
     
-    <div class="d-flex justify-content-between">
+    <div class="rs-margin d-flex justify-content-between mt-2">
 
-        <!-- Work Experience -->
+        <!-- Work Experience -->         
         <div class="work-experience">
             <h3>Work Experience</h3>
-            <div class="experience-item">
-                <h4>Founder at ezFactor</h4>
-                <p><em>Tehran, Iran</em> - April 2023 - Current</p>
-                <p>
-                    Developed and deployed scalable backend solutions with Django, working over 1500+ hours on core features.
-                </p>
-            </div>
-            <!-- Repeat similar structure for other work experiences -->
+            {% for experience in data.work_experience %}
+                <div class="experience-item">
+                    <h4>{{ experience.title }} at {{ experience.company }}</h4>
+                    <p>
+                        <span class="location-text">{{ experience.location }}</span>
+                        <span class="date-text"> - {{ experience.date }}</span>
+                    </p>
+                    <p class="description-text">
+                        {{ experience.description }}
+                    </p>
+                    {% for role in experience.rolls %}
+                        <div class="role-item">
+                            <p class="role-name-text"> --- {{ role.role_name }}</p>
+                            {% if role.description %}
+                                <span class="role-description-text">{{ role.description }}</span>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endfor %}
         </div>
 
         <!-- Skills Section -->
         <div class="skills">
             <h3>Software Skills</h3>
+            {% for skill, level in data.skills.software_skills|items %}
             <div class="skill-item">
-                <span>Python (Backend)</span>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 90%;"></div>
+                <span class="title-text">{{ skill }}</span>
+                <div class="progress-bar-container">
+                    <div class="skilllevel" style="width: {{ level|calculate_progress }}%;"></div>
+                    <div class="bulletpoint" style="left: {{ level|calculate_progress }}%;"></div>
                 </div>
             </div>
-            <div class="skill-item">
-                <span>Django</span>
-                <div class="progress-bar">
-                    <div class="progress" style="width: 80%;"></div>
-                </div>
-            </div>
-            <!-- Repeat similar structure for other skills -->
+            {% endfor %}
         </div>
 
     </div>
