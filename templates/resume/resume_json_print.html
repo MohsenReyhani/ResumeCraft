@@ -5,70 +5,98 @@
 
 {% block content %}
 
-    <!-- Header Section -->
-    <header class="resume-header d-flex">
-        <div class="header-text">
-            <h1 class="title-name">{{ data.personal_info.name }}</h1>
-        </div>
-        <div class="profile-image-container">
-            <div>
-                <img src="{{ profile_image.url }}" alt="Profile Picture">
+    <div class="print-page1">
+
+        <!-- Header Section -->
+        <header class="resume-header d-flex">
+            <div class="header-text">
+                <h1 class="title-name">{{ data.personal_info.name }}</h1>
             </div>
+            <div class="profile-image-container">
+                <div>
+                    <img src="{{ profile_image.url }}" alt="Profile Picture">
+                </div>
+            </div>
+        </header>
+
+        <div class="second-header">
+            <h2>{{ data.personal_info.role }}</h2>
+            <p>born {{ data.personal_info.dob }}</p>
+        </diV>
+
+        <!-- Professional Summary -->
+        <section class="summary rs-margin">
+            <h3>Professional Summary</h3>
+            <p>{{ data.summary }}</p>
+        </section>
+        
+        <div class="rs-margin d-flex justify-content-between mt-2">
+
+            <!-- Work Experience -->         
+            <div class="work-experience">
+                <h3>Work Experience</h3>
+                {% for experience in data.work_experience %}
+                    <div class="experience-item">
+                        <h4>{{ experience.title }} at {{ experience.company }}</h4>
+                        <p>
+                            <span class="location-text"><img class="locicon" src="{% static 'assets/svg/location.svg' %}"/>{{ experience.location }}</span>
+                            <span class="date-text"><img class="dateicon" src="{% static 'assets/svg/date.svg' %}"/> {{ experience.date }}</span>
+                        </p>
+                        <p class="description-text">
+                            {{ experience.description }}
+                        </p>
+                        {% for role in experience.rolls %}
+                            <div class="role-item">
+                                <p class="role-name-text"> --- {{ role.role_name }}</p>
+                                {% if role.description %}
+                                    <span class="role-description-text">{{ role.description }}</span>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endfor %}
+            </div>
+
+            <!-- Skills Section -->
+            <div class="skills">
+                <h3>Software Skills</h3>
+                {% for skill, level in data.software_skills|items %}
+                <div class="skill-item">
+                    <span class="title-text">{{ skill }}</span>
+                    <div class="progress-bar-container">
+                        <div class="skilllevel" style="width: {{ level|calculate_progress }}%;"></div>
+                        <div class="bulletpoint" style="left: {{ level|calculate_progress }}%;"></div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
         </div>
-    </header>
-
-    <div class="second-header">
-        <h2>{{ data.personal_info.role }}</h2>
-        <p>born {{ data.personal_info.dob }}</p>
-    </diV>
-
-    <!-- Professional Summary -->
-    <section class="summary rs-margin">
-        <h3>Professional Summary</h3>
-        <p>{{ data.summary }}</p>
-    </section>
     
-    <div class="rs-margin d-flex justify-content-between mt-2">
+    </div>
 
-        <!-- Work Experience -->         
-        <div class="work-experience">
-            <h3>Work Experience</h3>
-            {% for experience in data.work_experience %}
-                <div class="experience-item">
-                    <h4>{{ experience.title }} at {{ experience.company }}</h4>
-                    <p>
-                        <span class="location-text">{{ experience.location }}</span>
-                        <span class="date-text"> - {{ experience.date }}</span>
-                    </p>
-                    <p class="description-text">
-                        {{ experience.description }}
-                    </p>
-                    {% for role in experience.rolls %}
-                        <div class="role-item">
-                            <p class="role-name-text"> --- {{ role.role_name }}</p>
-                            {% if role.description %}
-                                <span class="role-description-text">{{ role.description }}</span>
-                            {% endif %}
-                        </div>
-                    {% endfor %}
-                </div>
-            {% endfor %}
-        </div>
-
-        <!-- Skills Section -->
-        <div class="skills">
-            <h3>Software Skills</h3>
-            {% for skill, level in data.skills.software_skills|items %}
-            <div class="skill-item">
-                <span class="title-text">{{ skill }}</span>
-                <div class="progress-bar-container">
-                    <div class="skilllevel" style="width: {{ level|calculate_progress }}%;"></div>
-                    <div class="bulletpoint" style="left: {{ level|calculate_progress }}%;"></div>
-                </div>
+    <div class="print-page2">
+        <div class="resume-header d-flex"></div>
+        <div class="secondprintpagecontainer">
+            <div class="skills-section rs-margin mt-2">
+                {% for category, skill_list in data.skills.items %}
+                    <div class="other-skills">
+                        <h3>{{ category }}</h3>
+                        <ul>
+                            {% for skill in skill_list %}
+                                <li><img class="checkicon" src="{% static 'assets/img/check.png' %}"/><span>{{ skill }}</span></li>
+                            {% endfor %}
+                        </ul>
+                    </div>
+                {% endfor %}
             </div>
-            {% endfor %}
+            <div class="contact-information rs-margin mt-2">
+                <h3>Contact Details</h3>
+                <p><span class="contacticon"><img src="{% static 'assets/img/mail.png' %}"/></span><a href="mailto:{{ data.personal_info.contact.email }}">{{ data.personal_info.contact.email }}</a></p>
+                <p><span class="contacticon"><img src="{% static 'assets/img/linkedin.png' %}"/></span><a href="https://{{ data.personal_info.contact.linkedin }}" target="_blank">{{ data.personal_info.contact.linkedin }}</a></p>
+                <p><span class="contacticon"><img src="{% static 'assets/img/phone.png' %}"/></span>{{ data.personal_info.contact.phone }}</p>
+            </div>
         </div>
-
     </div>
 
 {% endblock content %}

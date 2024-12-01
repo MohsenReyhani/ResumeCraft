@@ -3980,7 +3980,7 @@ progress {
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus {
-  font-family: "iranYekanFn" !important;
+  font-family: "Proxima Nova" !important;
   font-size: 1em !important;
 }
 
@@ -29035,7 +29035,7 @@ h6,
 .h4,
 .h5,
 .h6 {
-  font-family: "IranYekanFn", "Inter", sans-serif;
+  font-family: "Proxima Nova", "Inter", sans-serif;
   font-weight: 500;
 }
 
@@ -30373,12 +30373,12 @@ article .h6 {
 
 /* Jalali DateTime Picker */
 #ui-datepicker-div {
-  font-family: IranYekanFn;
+  font-family: Proxima Nova;
 }
 
 .ui-datepicker-month,
 .ui-datepicker-year {
-  font-family: IranYekanFn !important;
+  font-family: Proxima Nova !important;
   width: 100%;
   padding: 0.02rem 0.5rem;
   padding-top: 0.25rem;
@@ -31339,16 +31339,13 @@ body {
 
 
 :root {
-  --resume-print-primary: #3498db;
-}
-
-body {
-  background-color: var(--background-color);
-  color: var(--text-color);
+  --resume-print-primary: #2c98d4;
+  --resume-print-bg-gray: #2c98d4;
 }
 
 .print-body {
   background-color: #ffffff;
+  font-family: "Proxima Nova";
 }
 
 /* Header */
@@ -31470,7 +31467,7 @@ body {
 .experience-item h4 {
   font-size: 13px;
   font-weight: 400;
-  color: #078bc1;
+  color: var(--resume-print-primary);
   margin-bottom: 0;
 }
 
@@ -31496,10 +31493,12 @@ body {
   font-size: 12px;
   margin-left: 14px;
   font-weight: 300;
+  line-height: 8px;
 }
 
 .experience-item .role-name-text {
   font-size: 12px;
+  line-height: 8px;
 }
 
 .experience-item .role-item {
@@ -31522,7 +31521,7 @@ body {
 }
 
 .skill-item .progress-bar-container .skilllevel {
-  background-color: #2c8fe0;
+  background-color: var(--resume-print-primary);
   position: relative;
   border-radius: 50px;
   height: 2px;
@@ -31538,4 +31537,103 @@ body {
   border: 2px #ffffff solid;
   margin-left: -5px;
   top: -4px;
+}
+
+div.print-page1,
+div.print-page2 {
+  height: 100vh;
+}
+
+.checkicon {
+  width: 12px;
+  height: 12px;
+  margin-right: 5px;
+  margin-bottom: 3px;
+}
+
+.skills-section {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  background-color: #fafafa;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.other-skills {
+  flex: 1 1 calc(50% - 20px);
+  box-sizing: border-box;
+  min-width: 300px;
+}
+
+.other-skills h3 {
+  font-size: 14px;
+  color: black;
+}
+
+.other-skills li {
+  list-style: none;
+}
+
+.other-skills li span {
+  font-size: 12px;
+  color: gray;
+}
+
+.contact-information {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: #fafafa;
+  box-shadow: none;
+  border-radius: 5px;
+  padding: 25px;
+}
+
+.contact-information h3 {
+  font-size: 14px;
+  margin-bottom: 0px;
+}
+
+.contact-information p {
+  font-size: 12px;
+  margin-bottom: 0px;
+  display: flex;
+  align-items: end;
+}
+
+.contacticon {
+  width: 15px;
+  height: 15px;
+  margin: 3px;
+  background-color: var(--resume-print-primary);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.contacticon img {
+  width: 10px;
+}
+
+.locicon,
+.dateicon {
+  width: 10px;
+  height: 10px;
+  margin-bottom: 4px;
+  margin-right: 2px;
+}
+
+.dateicon {
+  margin-left: 10px;
+}
+
+.secondprintpagecontainer {
+  height: 85vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
 }
