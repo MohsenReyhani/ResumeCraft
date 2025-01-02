@@ -31,10 +31,16 @@
 
         <div class="row">
           <div class="col-md-4 mb-5">
-            <div>
-              <label for="website_name">{{ form.website_name.label }}</label>
-              {{ form.website_name }}
-            </div>
+              <label for="company_name">{{ form.company_name.label }}</label>
+              {{ form.company_name }}
+          </div> 
+          <div class="col-md-4 mb-5">
+              <label for="role_name">{{ form.role_name.label }}</label>
+              {{ form.role_name }}
+          </div>
+          <div class="col-md-4 mb-5">
+              <label for="ad_link">{{ form.ad_link.label }}</label>
+              {{ form.ad_link }}
           </div>
           <div class="col-md-4 mb-5">
             <div class="profile-image">
@@ -43,14 +49,11 @@
             </div>
           </div>
         </div> 
-        <div class="row">
-          <div class="col-md-4 mb-5">
-            <div>
-              <label for="data">{{ form.data.label }}</label>
-              {{ form.data }}
-            </div>
-          </div>
+        <div class="row json-container">
+            <label for="json-editor">{{ form.data.label }}</label>
+            <textarea id="json-editor" name="{{ form.data.name }}">{{ form.data.value }}</textarea>
         </div>
+        
 
         {% if is_edit %}
         <button type="submit" id="btn-create-resume-form" class="btn btn-gray-800">بروزرسانی</button>

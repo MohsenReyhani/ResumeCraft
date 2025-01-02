@@ -79,6 +79,12 @@
 <!-- base Script  -->
 <script src="{% static 'js/base.js' %}"></script>
 
+<!-- Json Ace Editor -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/codemirror.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.16/mode/javascript/javascript.min.js"></script>
+
+
 {% if 'dashboard' in segment %}
 <!-- Ajax Functions dashboard -->
 {% include 'dashboard/ajax_dashboard.html' %}

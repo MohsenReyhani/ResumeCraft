@@ -12,30 +12,10 @@
             </a>
         </button>
     </td>
-    <td>
-        <span class="fw-bold">{{ item.full_name|word_wrap }}</span>
-    </td>
-    <td>
-        <span class="fw-normal">{{ item.title }}</span>
-    </td>
-    <td>
-        <span class="fw-normal">{{ item.contact_phone }}</span>
-    </td>
-    <td>
-        <span class="fw-normal">{{ item.contact_email }}</span>
-    </td>
-    <td>
-        <span class="fw-normal">
-            {% if item.linkedin_url %}
-            <a href="{{ item.linkedin_url }}" target="_blank">LinkedIn</a>
-            {% else %}
-            ---
-            {% endif %}
-        </span>
-    </td>
-    <td class="last-table-item">
-        <span class="fw-bold">{{ item.created_at|date:"Y-m-d" }}</span>
-    </td>
+    <td><span class="fw-normal">{{ item.company_name|word_wrap }}</span></td>
+    <td><span class="fw-normal">{{ item.role_name }}</span></td>
+    <td><span class="fw-normal">{{ item.ad_link }}</span></td>
+    <td><span class="fw-normal">{{ item.created_at }}</span></td>
 </tr>
 {% empty %}
 <tr>

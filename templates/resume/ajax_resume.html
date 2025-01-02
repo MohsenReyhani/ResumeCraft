@@ -7,93 +7,28 @@
     $('#new-resume-close').on('click', function (event) {
         history.back();
     });
-    
-    function addForm(formsetPrefix, formClass) {
-        var formCountElem = document.getElementById('id_' + formsetPrefix + '-TOTAL_FORMS');
-        if (!formCountElem) {
-            console.error('Could not find TOTAL_FORMS input for formset: ' + formsetPrefix);
-            return;
-        }
-        var formCount = parseInt(formCountElem.value);
 
-        // Decide which template to use based on the prefix
-        var templateId = formsetPrefix === 'work_experiences' ? 'empty-form-template-work' : 'empty-form-template-skill';
+</script>
 
-        // Get the template for the empty form
-        var emptyFormHtml = document.getElementById(templateId).innerHTML.replace(/__prefix__/g, formCount);
+<script>
+    var editor = CodeMirror.fromTextArea(document.getElementById("json-editor"), {
+        mode: "application/json",
+        lineNumbers: true,
+        theme: "default",  // You can choose other themes
+        tabSize: 2,
+        autoCloseBrackets: true,
+        matchBrackets: true,
+        lineWrapping: true,
+        gutters: ["CodeMirror-lint-markers"],
+        lint: true
+    });
 
-        // Ensure the container for the forms exists
-        var formContainer = document.getElementById(formsetPrefix + '-forms');
-        if (!formContainer) {
-            console.error('Could not find form container for formset: ' + formsetPrefix);
-            return;
-        }
-
-        // Modify the empty form HTML to add the remove button and wrap in a unique div
-        var formWrapperId = 'form-' + formsetPrefix + '-' + formCount;  // Unique div id
-        emptyFormHtml = '<div id="' + formWrapperId + '">' + emptyFormHtml; // Wrap form in div
-
-        // Add dynamic numbering to the section header
-        var sectionName = formsetPrefix === 'work_experiences' ? 'تجربه کاری' : 'مهارت';
-        emptyFormHtml = '<div class="row"><div class="d-flex"><span class="row-seperate-txt">' + sectionName + ' شماره ' + (formCount + 1) + '</span><hr class="row-seperator"></div></div>' + emptyFormHtml;
-
-        emptyFormHtml += '<div><button type="button" class="btn btn-danger btn-sm" onclick="removeForm(\'' + formWrapperId + '\')">حذف</button></div>';
-        emptyFormHtml += '</div>'; // Close the div
-
-        // Append the new form
-        formContainer.insertAdjacentHTML('beforeend', emptyFormHtml);
-
-        // Increment the total number of forms
-        formCountElem.value = formCount + 1;
+    // Optional: Format JSON content on load
+    var content = editor.getValue();
+    try {
+        editor.setValue(JSON.stringify(JSON.parse(content), null, 2));  // Beautify on load
+    } catch (e) {
+        console.log("Invalid JSON");
     }
-
-    // Function to remove a form dynamically
-    function removeForm(formId) {
-        var formElement = document.getElementById(formId);
-        if (formElement) {
-            formElement.remove();
-        }
-    }
-
-    function updateForms() {
-        
-        var fileInput = document.getElementById('id_profile_image');
-        var button = document.createElement('button');
-        button.type = 'button';  // Set the button type to 'button' to prevent form submission
-        button.className = fileInput.getAttribute('class');
-        button.textContent = fileInput.getAttribute('data-button-text');
-
-        var filenameSpan = document.createElement('span');
-        filenameSpan.textContent = fileInput.getAttribute('data-placeholder-text');
-        filenameSpan.classList.add("w-100")
-
-        fileInput.style.visibility = 'hidden';
-        fileInput.style.position = 'absolute';
-
-        button.onclick = function() {
-            fileInput.click();
-        };
-
-        fileInput.onchange = function() {
-            filenameSpan.textContent = fileInput.files.length > 0 ? fileInput.files[0].name : fileInput.getAttribute('data-placeholder-text');
-        };
-
-        // Create a container for the button and filenameSpan
-        var container = document.createElement('div');
-        container.style.display = 'flex'; // Set the display to flex
-        container.style.alignItems = 'center'; // Align items vertically in the center
-        container.style.gap = '10px'; // Optional: add space between the button and span
-
-        // Append the button and filenameSpan to the container
-        container.appendChild(button);
-        container.appendChild(filenameSpan);
-
-        // Insert the container before the fileInput in the DOM
-        fileInput.parentNode.insertBefore(container, fileInput);
-    }
-
-    document.addEventListener("DOMContentLoaded", function() {
-        updateForms()
-    })
 
 </script>

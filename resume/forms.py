@@ -161,10 +161,18 @@ SubSkillFormSet = inlineformset_factory(
 class JsonResumeForm(forms.ModelForm):
     class Meta:
         model = JsonResume
-        fields = ['website_name', 'profile_image', 'data']
+        fields = ['company_name', 'role_name', 'ad_link', 'profile_image', 'data']
         widgets = {
-            'website_name': forms.TextInput(attrs={
-                'placeholder': 'نام سایت مورد نظر را وارد کنید',
+            'company_name': forms.TextInput(attrs={
+                'placeholder': 'نام شرکت مورد نظر را وارد کنید',
+                'class': 'form-control'
+            }), 
+            'role_name': forms.TextInput(attrs={
+                'placeholder': 'نام سمت درخواستی را وارد کنید',
+                'class': 'form-control'
+            }),
+            'ad_link': forms.TextInput(attrs={
+                'placeholder': 'لینک آگهی را وارد کنید',
                 'class': 'form-control'
             }),
             'data': forms.Textarea(attrs={

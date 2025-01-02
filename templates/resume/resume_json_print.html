@@ -35,7 +35,7 @@
             <!-- Work Experience -->         
             <div class="work-experience">
                 <h3>Work Experience</h3>
-                {% for experience in data.work_experience %}
+                {% for experience in data.work_experience|slice:":5" %}
                     <div class="experience-item">
                         <h4>{{ experience.title }} at {{ experience.company }}</h4>
                         <p>
@@ -78,6 +78,36 @@
     <div class="print-page2">
         <div class="resume-header d-flex"></div>
         <div class="secondprintpagecontainer">
+
+            <div class="rs-margin d-flex justify-content-between mt-2">
+
+                <!-- Work Experience -->         
+                <div class="work-experience">
+                    <h3>Work Experience</h3>
+                    {% for experience in data.work_experience|slice:"5:" %}
+                        <div class="experience-item">
+                            <h4>{{ experience.title }} at {{ experience.company }}</h4>
+                            <p>
+                                <span class="location-text"><img class="locicon" src="{% static 'assets/svg/location.svg' %}"/>{{ experience.location }}</span>
+                                <span class="date-text"><img class="dateicon" src="{% static 'assets/svg/date.svg' %}"/> {{ experience.date }}</span>
+                            </p>
+                            <p class="description-text">
+                                {{ experience.description }}
+                            </p>
+                            {% for role in experience.rolls %}
+                                <div class="role-item">
+                                    <p class="role-name-text"> --- {{ role.role_name }}</p>
+                                    {% if role.description %}
+                                        <span class="role-description-text">{{ role.description }}</span>
+                                    {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endfor %}
+                </div>
+
+            </div>
+
             <div class="skills-section rs-margin mt-2">
                 {% for category, skill_list in data.skills.items %}
                     <div class="other-skills">
